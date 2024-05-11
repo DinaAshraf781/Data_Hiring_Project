@@ -1,0 +1,42 @@
+Insight 1
+
+SELECT s.[Status], count(a.[ID]) as [Candidates number], a.Created, a.[Modified], DATEDIFF(day, a.Created,a.Modified) as [number of days]
+from [Applicants] as a, [dbo].[Status] as s
+where s.ID = a.[Status ID] and SIGN(DATEDIFF(day, a.Created,a.Modified)) = 1
+group by [Status ID],[Modified],s.[Status], a.Created
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Insight 2
+
+SELECT a.[Applicant Name], a.emailAddress, s.[Status], [Modified]
+from [Applicants] as a, [dbo].[Status] as s
+where s.ID = a.[Status ID]
+group by a.[Status ID],Modified, s.[Status], a.[Applicant Name], a.emailAddress
+having a.[Status ID] in (4,13,17)
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Insight 3
+
+SELECT [Technical interview date], [Interviewers names], count([Status ID]) as [Rate of Failure] FROM [Applicants]
+where [Status ID] = 13 and [Technical interview date] != '' and [Interviewers names] != 'none'
+group by [Interviewers names],[Technical interview date]
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Insight 4
+
+SELECT [Modified], [Applicant Name],[emailAddress]
+from [Applicants]
+where [Status ID] = 23
+group by Modified, [Applicant Name], [emailAddress]
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Insight 5
+
+SELECT [fit_to_account], count(a.[ID]) as [Number of Candidates], s.[Status]
+from [Applicants] as a, [dbo].[Status] as s
+where [Status ID] in (3,11,12,20) and s.ID = [Status ID]
+group by [fit_to_account], [Status ID], s.[Status]
