@@ -40,3 +40,24 @@ SELECT [fit_to_account], count(a.[ID]) as [Number of Candidates], s.[Status]
 from [Applicants] as a, [dbo].[Status] as s
 where [Status ID] in (3,11,12,20) and s.ID = [Status ID]
 group by [fit_to_account], [Status ID], s.[Status]
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Insight 6
+
+SELECT s.[Status], r.Roles, count([role id]) as [Number of failed roles]
+from [Applicants] as a, [dbo].[Status] as s, Available_Roles as r
+where s.ID = a.[Status ID] and r.[ID] = [Role ID]
+group by a.[Status ID],r.Roles, s.[Status]
+having a.[Status ID] in (4,8,10,13,17)
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Insight 7
+
+SELECT Modified, r.Roles, count(a.[ID]) as [Number of candidates], s.[Status]
+FROM [Applicants] as a, Available_Roles as r, [Status] as s
+where [Status ID] in (3,11,12,20) and Modified != '' and [Role ID] != '' and r.ID = [Role ID] and s.ID = [Status ID]
+group by Modified, r.Roles, [Role ID], s.[Status]
